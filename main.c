@@ -15,8 +15,11 @@ void aiMove(char (*board)[3], char human, char comp) {
         board[1][1] = comp;
         return;
     }
+
+    //arrays containing weight of each row, col and diagonal for each player
     int outcomesHuman[8] = {0};
     int outcomesComp[8] = {0};
+
     //horizontal
     for (int y = 0; y < 3; y++ ) {
         for (int x = 0; x < 3; x++ ) {
@@ -47,6 +50,166 @@ void aiMove(char (*board)[3], char human, char comp) {
         j--;
     }
 
+    for(int i = 0; i < 8; i++) {
+        if ((outcomesHuman[i] == 3) || (outcomesComp[i] == 3)) {
+            printf("Game won");
+            return;
+        }
+    }
+
+    for(int i = 0; i < 8; i++) {
+        if(outcomesHuman[i] == 2) {
+
+            //first diagonal
+            if (i == 6) {
+                for (int n = 0; n < 3; n++) {
+                    if (0 == board[n][n]) {
+                        board[n][n] = comp;
+                        return;
+                    }
+                }
+            }
+
+
+            //second diagonal
+            if(i == 7) {
+                int j = 2;
+                for (int n = 0; n < 3; n++) {
+                    if (0 == board[j][n]) {
+                        board[j][n] = comp;
+                        return;
+                    }
+                    j--;
+                }
+            }
+
+            //horizontal
+            if(i < 3) {
+                for (int x = 0; x < 3; x++ ) {
+                    if (0 == board[i][x]) {
+                        board[i][x] = comp;
+                        return;
+                    }
+                }
+            }
+
+            //vertical
+            else {
+                for (int y = 0; y < 3; y++ ) {
+                    if (0 == board[y][i]) {
+                        board[y][i] = comp;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < 8; i++) {
+        if(outcomesComp[i] == 2) {
+
+            //first diagonal
+            if (i == 6) {
+                for (int n = 0; n < 3; n++) {
+                    if (0 == board[n][n]) {
+                        board[n][n] = comp;
+                        return;
+                    }
+                }
+            }
+
+
+            //second diagonal
+            if(i == 7) {
+                int j = 2;
+                for (int n = 0; n < 3; n++) {
+                    if (0 == board[j][n]) {
+                        board[j][n] = comp;
+                        return;
+                    }
+                    j--;
+                }
+            }
+
+            //horizontal
+            if(i < 3) {
+                for (int x = 0; x < 3; x++ ) {
+                    if (0 == board[i][x]) {
+                        board[i][x] = comp;
+                        return;
+                    }
+                }
+            }
+
+                //vertical
+            else {
+                for (int y = 0; y < 3; y++ ) {
+                    if (0 == board[y][i]) {
+                        board[y][i] = comp;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < 8; i++) {
+        if(outcomesComp[i] == 1) {
+
+            //first diagonal
+            if (i == 6) {
+                for (int n = 0; n < 3; n++) {
+                    if (0 == board[n][n]) {
+                        board[n][n] = comp;
+                        return;
+                    }
+                }
+            }
+
+
+            //second diagonal
+            if(i == 7) {
+                int j = 2;
+                for (int n = 0; n < 3; n++) {
+                    if (0 == board[j][n]) {
+                        board[j][n] = comp;
+                        return;
+                    }
+                    j--;
+                }
+            }
+
+            //horizontal
+            if(i < 3) {
+                for (int x = 0; x < 3; x++ ) {
+                    if (0 == board[i][x]) {
+                        board[i][x] = comp;
+                        return;
+                    }
+                }
+            }
+
+                //vertical
+            else {
+                for (int y = 0; y < 3; y++ ) {
+                    if (0 == board[y][i]) {
+                        board[y][i] = comp;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    for(int y = 0; y < 3; y++) {
+        for(int x = 0; x < 3; x++) {
+            if(0 == board[y][x]) {
+                board[y][x] = comp;
+                return;
+            }
+        }
+    }
+
     for (int i = 0; i < 8; i++) {
         printf("%d ", outcomesHuman[i]);
     }
@@ -55,6 +218,8 @@ void aiMove(char (*board)[3], char human, char comp) {
         printf("%d ", outcomesComp[i]);
     }
     printf("\n");
+
+
 
 };
 
@@ -69,7 +234,6 @@ int main(void) {
     while(1) {
         scanf("%d %d", &y, &x);
         board[y][x] = p1;
-        printBoard(&board);
         aiMove(&board, p1, p2);
         printBoard(&board);
     }
